@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StagePort CueR Receipt",
+  "type": "object",
+  "required": ["receipt_id", "timestamp", "event_id", "decision", "actor", "approved_by", "receipt_hash"],
+  "properties": {
+    "receipt_id": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "event_id": {"type": "string"},
+    "decision": {"type": "string", "examples": ["INTRODUCED", "ACCESS_APPROVED", "ACCESS_DENIED"]},
+    "actor": {"type": "string"},
+    "approved_by": {"type": "string"},
+    "reason": {"type": "string"},
+    "receipt_hash": {"type": "string"},
+    "scope": {"type": "string", "const": "synthetic evaluation"}
+  }
+}
