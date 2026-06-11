@@ -3,87 +3,60 @@ set -e
 
 # ============================================
 # StagePort × CueR → GitHub Sync
-# Adapted for pnpm monorepo structure
+# Full backup + portability script
+# Usage:
+#   ./sync-to-github.sh                   — push everything
+#   ./sync-to-github.sh --dry-run         — preview, no push
+#   ./sync-to-github.sh -m "my message"   — custom commit message
 # ============================================
 
 DRY_RUN=false
-PUBLIC_ONLY=false
 COMMIT_MSG=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --dry-run) DRY_RUN=true; shift ;;
-    --public) PUBLIC_ONLY=true; shift ;;
     -m|--message) COMMIT_MSG="$2"; shift 2 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
 
-echo "🔄 StagePort × CueR GitHub Sync"
-echo "=================================="
+REPO_URL="https://github.com/TheAVCfiles/stageport-cuer-hackathon.git"
 
-if [ "$PUBLIC_ONLY" = true ]; then
-    BRANCH="main"; REMOTE="public"
-    echo "Mode: PUBLIC DEMO (clean push)"
+echo "🔄 StagePort × CueR → GitHub Backup"
+echo "====================================="
+
+# ── Auto-configure remote using $Token secret ────────────────────────────────
+if [ -n "$Token" ]; then
+    AUTH_URL="https://${Token}@github.com/TheAVCfiles/stageport-cuer-hackathon.git"
+    git remote remove origin 2>/dev/null || true
+    git remote add origin "$AUTH_URL"
+    echo "✅ Remote set using Token secret"
 else
-    BRANCH="main"; REMOTE="origin"
-    echo "Mode: FULL PUSH to hackathon repo"
+    echo "⚠  No Token secret found."
+    echo "   Add your GitHub PAT as a secret named 'Token' in Replit Secrets,"
+    echo "   or set: export Token=your_github_pat"
+    echo "   Then rerun this script."
+    exit 1
 fi
 
+# ── Secret scan (catches accidental credential commits) ──────────────────────
 echo ""
-echo "🔍 Running secret scan..."
-if git grep -qE "(PRIVATE KEY|API_KEY|SECRET|TOKEN|PASSWORD|sk-|ghp_|AIza|github_pat)" \
-   -- '*.ts' '*.tsx' '*.js' '*.py' '*.json' '*.env' '*.sh' 2>/dev/null; then
-    echo "❌ Potential secrets detected — aborting."
-    git grep -nE "(PRIVATE KEY|API_KEY|SECRET|TOKEN|PASSWORD|sk-|ghp_|AIza|github_pat)" \
-       -- '*.ts' '*.tsx' '*.js' '*.py' '*.json' '*.env' '*.sh' 2>/dev/null || true
+echo "🔍 Scanning for secrets before push..."
+SCAN_HITS=$(git grep -nE "(PRIVATE KEY|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]+|AIzaSy)" \
+   -- '*.ts' '*.tsx' '*.js' '*.py' '*.json' '*.env' '*.sh' 2>/dev/null || true)
+if [ -n "$SCAN_HITS" ]; then
+    echo "❌ Potential secrets detected — aborting push:"
+    echo "$SCAN_HITS"
     exit 1
 else
-    echo "✅ No obvious secrets found."
+    echo "✅ Clean — no secrets found."
 fi
 
-if [ "$PUBLIC_ONLY" = true ]; then
-    echo ""
-    echo "📦 Preparing clean public demo snapshot..."
-    rm -rf submission/public-demo
-    mkdir -p submission/public-demo
-
-    declare -a PUBLIC_PATHS=(
-        "artifacts/stageport/src"
-        "artifacts/stageport/public"
-        "artifacts/stageport/package.json"
-        "artifacts/stageport/vite.config.ts"
-        "artifacts/stageport/index.html"
-        "artifacts/stageport/tsconfig.json"
-        "artifacts/stageport-agent/cuer_agent"
-        "artifacts/stageport-agent/requirements.txt"
-        "artifacts/stageport-agent/Dockerfile"
-        "artifacts/stageport-agent/README.md"
-        "artifacts/api-server/src"
-        "artifacts/api-server/package.json"
-        "artifacts/submission-video/src"
-        "package.json"
-        "pnpm-workspace.yaml"
-        "README.md"
-        "PERSISTENT_EVENT_MEMORY.md"
-    )
-
-    for path in "${PUBLIC_PATHS[@]}"; do
-        if [ -e "$path" ]; then
-            target_dir="submission/public-demo/$(dirname "$path")"
-            mkdir -p "$target_dir"
-            cp -r "$path" "$target_dir/"
-            echo "  ✓ $path"
-        else
-            echo "  ⚠ Not found (skipping): $path"
-        fi
-    done
-
-    echo "✅ Public snapshot ready in submission/public-demo/"
-fi
-
+# ── Stage everything ──────────────────────────────────────────────────────────
 echo ""
-echo "📋 Changes to be committed:"
+echo "📋 Changes staged for commit:"
+git add .
 git status --short
 
 if [ "$DRY_RUN" = true ]; then
@@ -92,32 +65,22 @@ if [ "$DRY_RUN" = true ]; then
     exit 0
 fi
 
-echo ""
+# ── Commit ────────────────────────────────────────────────────────────────────
 if [ -z "$COMMIT_MSG" ]; then
-    read -rp "Commit message (Enter = auto): " COMMIT_MSG
-fi
-if [ -z "$COMMIT_MSG" ]; then
-    COMMIT_MSG="Replit sync — $(date '+%Y-%m-%d %H:%M')"
+    COMMIT_MSG="Backup — $(date '+%Y-%m-%d %H:%M')"
 fi
 
-git add .
 if git diff --cached --quiet; then
-    echo "ℹ️  Nothing new to commit."
+    echo ""
+    echo "ℹ️  Nothing new to commit — workspace is already in sync."
 else
     git commit -m "$COMMIT_MSG"
 fi
 
+# ── Push ──────────────────────────────────────────────────────────────────────
 echo ""
-if [ "$PUBLIC_ONLY" = true ]; then
-    echo "🚀 Pushing clean public demo via git subtree..."
-    git subtree push --prefix=submission/public-demo "$REMOTE" main || {
-        echo "⚠  Subtree push failed. Run manually:"
-        echo "   git subtree push --prefix=submission/public-demo public main"
-    }
-else
-    echo "🚀 Pushing to $REMOTE/$BRANCH..."
-    git push "$REMOTE" "$BRANCH"
-fi
+echo "🚀 Pushing to GitHub..."
+git push origin HEAD:main
 
 echo ""
-echo "✅ Sync complete!"
+echo "✅ Done → $REPO_URL"
