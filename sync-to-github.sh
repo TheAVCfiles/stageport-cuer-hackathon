@@ -84,3 +84,23 @@ git push origin HEAD:main
 
 echo ""
 echo "✅ Done → $REPO_URL"
+# StagePort × CueR — safe GitHub sync
+
+set -e
+
+chmod +x ./sync-to-github.sh
+
+echo "Checking for Replit Secret: Token..."
+if [ -z "$Token" ]; then
+  echo "Missing Token."
+  echo "Add your GitHub PAT in Replit Secrets as: Token"
+  exit 1
+fi
+
+echo "Previewing changes first..."
+./sync-to-github.sh --dry-run
+
+echo "Pushing to GitHub..."
+./sync-to-github.sh -m "Finalize hackathon evaluation kit"
+
+echo "Done. GitHub sync complete."
