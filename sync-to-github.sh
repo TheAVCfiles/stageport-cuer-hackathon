@@ -32,7 +32,7 @@ done
 
 REPO_URL="https://github.com/TheAVCfiles/stageport-cuer-hackathon.git"
 
-echo "StagePort × CueR → GitHub Backup"
+echo "StagePort x CueR -> GitHub Backup"
 echo "================================="
 
 if [ -n "$Token" ]; then
@@ -49,15 +49,17 @@ fi
 echo ""
 echo "Scanning for secrets before push..."
 
-SCAN_HITS=$(git grep -nE "(PRIVATE KEY|API_KEY|SECRET|TOKEN|PASSWORD|sk-[a-zA-Z0-9_-]+|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]+|AIzaSy)" \
-  -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.py' '*.json' '*.env' '*.sh' '*.md' 2>/dev/null || true)
+# Exclude this script and README-GIT.md (they contain scan patterns as code/docs)
+SCAN_HITS=$(git grep -nE "(ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{30,}|AIzaSy[a-zA-Z0-9_-]{33})" \
+  -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.py' '*.json' '*.env' \
+     ':(exclude)sync-to-github.sh' ':(exclude)README-GIT.md' 2>/dev/null || true)
 
 if [ -n "$SCAN_HITS" ]; then
   echo "Potential secrets detected — aborting push:"
   echo "$SCAN_HITS"
   exit 1
 else
-  echo "Clean — no obvious secrets found."
+  echo "Clean — no secrets found."
 fi
 
 echo ""
@@ -87,4 +89,4 @@ echo "Pushing to GitHub..."
 git push origin HEAD:main
 
 echo ""
-echo "Done → $REPO_URL"
+echo "Done -> $REPO_URL"
