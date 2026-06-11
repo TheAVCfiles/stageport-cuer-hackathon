@@ -2,7 +2,7 @@
 
 Scoped hackathon evaluation kit for StagePort x CueR.
 
-StagePort x CueR is a multi-agent live-event access and introduction system. Each attendee receives a digital twin and mobile QR credential. CueR reads event-floor context, pass tier, participant intent, zone pressure, and operational state, then proposes high-value introductions or access actions for a human director to approve. Approved actions are sealed into signed receipt keychains.
+StagePort x CueR is a multi-agent live-event access and introduction system. Each attendee receives a digital twin and mobile QR credential. CueR reads event-floor context, pass tier, participant intent, zone pressure, and operational state, then proposes high-value introductions or access actions for a human director to approve. Approved actions are represented as receipt/keychain artifacts.
 
 Tagline: Your twin walks the floor so you do not have to.
 
@@ -12,7 +12,7 @@ Live demo: https://stageportxcuer.replit.app
 
 Demo video: https://stageportxcuer.replit.app/submission-video/
 
-Demo access is provided through private hackathon testing instructions. The demo password is intentionally not published in this public repository.
+The demo is public for hackathon judging and uses synthetic evaluation data only. It does not expose production StagePort infrastructure, real attendee data, customer data, signing keys, credentials, or proprietary scoring logic.
 
 ## What This Repository Is
 
