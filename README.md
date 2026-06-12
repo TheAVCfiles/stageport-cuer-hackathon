@@ -30,6 +30,8 @@ Canonical architecture: [architecture/ARCHITECTURE.md](architecture/ARCHITECTURE
 
 Architecture diagram PDF: [StagePort_CueR_Architecture_OnePager_FINAL.pdf](StagePort_CueR_Architecture_OnePager_FINAL.pdf)
 
+Founder origin story: [FOUNDER_ORIGIN.md](FOUNDER_ORIGIN.md)
+
 ## Technical Requirements
 
 Challenge requirement mapping: [SUBMISSION_REQUIREMENTS_CHECKLIST.md](SUBMISSION_REQUIREMENTS_CHECKLIST.md)
