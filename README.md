@@ -26,6 +26,26 @@ This repository is not the full StagePort platform. It does not include the prod
 
 Replit is the polished live demo surface. GitHub is the sanitized public evaluation surface. Cloud Run is the Google-native proof layer. StagePort core remains private.
 
+Canonical architecture: [architecture/ARCHITECTURE.md](architecture/ARCHITECTURE.md)
+
+Architecture diagram PDF: [StagePort_CueR_Architecture_OnePager_FINAL.pdf](StagePort_CueR_Architecture_OnePager_FINAL.pdf)
+
+## Technical Requirements
+
+Challenge requirement mapping: [SUBMISSION_REQUIREMENTS_CHECKLIST.md](SUBMISSION_REQUIREMENTS_CHECKLIST.md)
+
+Testing instructions: [submission/TESTING_INSTRUCTIONS.md](submission/TESTING_INSTRUCTIONS.md)
+
+Cloud Run reference service: [agent/README.md](agent/README.md)
+
+MCP adapter boundary: [mcp/README.md](mcp/README.md)
+
+## License and IP Boundary
+
+This evaluation kit is licensed under Apache-2.0 for the scoped public repository only. See [LICENSE](LICENSE).
+
+The open-source license does not grant trademark, brand, product identity, commercial methodology, production system, or StagePort platform rights. See [NOTICE](NOTICE), [TRADEMARKS.md](TRADEMARKS.md), [IP_BOUNDARY.md](IP_BOUNDARY.md), and [OPEN_SOURCE_SCOPE.md](OPEN_SOURCE_SCOPE.md).
+
 ## Submission Spine
 
 Agents propose. Humans approve. Receipts prove what changed.
