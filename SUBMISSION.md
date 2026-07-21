@@ -38,7 +38,7 @@ The movement-as-computation teaching premise builds on Allison Van Cura's earlie
 
 ## Links
 
-- Live demo: `[ADD DEPLOYMENT]`
-- Code: `[ADD FEATURE BRANCH]`
+- Live demo: `https://barre-code-movement-cipher-lab.vercel.app/`
+- Code: `https://github.com/TheAVCfiles/stageport-cuer-hackathon/tree/openai-build-week-2026-barre-code`
 - Video: `[ADD PUBLIC YOUTUBE URL]`
 - Codex Session ID: `[RUN /feedback AND ADD ID]`

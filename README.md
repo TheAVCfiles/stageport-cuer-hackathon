@@ -4,6 +4,9 @@ A standalone responsive lesson that teaches computational thinking through six s
 
 Deterministic TypeScript decides whether the sequence is structurally correct. GPT-5.6 Sol is an optional, server-only explanation layer that runs only after validation. Model failure never blocks completion.
 
+- Live lesson: https://barre-code-movement-cipher-lab.vercel.app/
+- Build Week branch: https://github.com/TheAVCfiles/stageport-cuer-hackathon/tree/openai-build-week-2026-barre-code
+
 ## Golden path
 
 1. Decode six movement ciphers.
