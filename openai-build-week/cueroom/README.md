@@ -6,6 +6,10 @@ StagePort CueRoom translates a teacher's movement vocabulary, counts, music cues
 
 Built by Allison Van Cura / Global AVC Systems with Codex and GPT-5.6 for OpenAI Build Week 2026.
 
+**Live demo:** https://stageport-cueroom-build-week.vercel.app/
+
+**Build Week source:** https://github.com/TheAVCfiles/stageport-cuer-hackathon/tree/openai-build-week-2026-cueroom/openai-build-week/cueroom
+
 ## The problem
 
 Most AI education begins at a keyboard. That excludes many young people who learn through rhythm, space, pattern, repetition, and movement, especially girls, neurodivergent students, and nontraditional thinkers. Meanwhile, generic choreography generators erase teacher judgment and cultural context.
@@ -100,6 +104,8 @@ curl -X POST http://localhost:3333/api/compose \
 ```
 
 ## Judge path
+
+Open https://stageport-cueroom-build-week.vercel.app/, then:
 
 1. Click **Load demo**.
 2. Review the source moves, audience, objective, and safety constraints.
