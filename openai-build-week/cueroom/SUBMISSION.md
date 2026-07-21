@@ -52,7 +52,7 @@ Codex, GPT-5.6, OpenAI Responses API, JavaScript, Node.js, strict JSON Schema, S
 
 ## Required submission fields
 
-- Code repository: `[ADD FINAL GITHUB URL]`
-- Live demo: `[ADD DEPLOYED URL]`
+- Code repository: `https://github.com/TheAVCfiles/stageport-cuer-hackathon/tree/openai-build-week-2026-cueroom/openai-build-week/cueroom`
+- Live demo: `https://stageport-cueroom-build-week.vercel.app/`
 - Public YouTube demo under 3 minutes: `[UPLOAD VIDEO AND ADD URL]`
 - Codex `/feedback` Session ID: `[RUN /feedback IN THE BUILD SESSION AND PASTE ID]`
