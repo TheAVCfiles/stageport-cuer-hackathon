@@ -75,6 +75,18 @@ ENV_FILE=../.env.local npm start
 npm run check
 ```
 
+## Hello Self FSM v0
+
+The experimental public reference FSM models bounded self-location and correction through:
+
+```text
+BOOT → B+ → PROJECT → SCRAPE → COMPARE → A- → MOVE → NOTARIZE → REACQUIRE
+```
+
+It includes dual-clock phase comparison, nucleus-preserving context rotation, explicit runtime subtraction, holds and escalations, and execution/correction/restraint receipts. The included Late Dancer test verifies that the system reduces movement or holds rather than blindly executing against a changed room.
+
+See [`docs/HELLO_SELF_FSM_V0.md`](docs/HELLO_SELF_FSM_V0.md). This reference module is intentionally bounded and does not disclose the private StagePort production control plane.
+
 ## Deploy to Vercel
 
 The `api/` directory contains Vercel Node functions for composition, approval, and health checks. The `vercel.json` rewrites expose the static interface at the root URL.
